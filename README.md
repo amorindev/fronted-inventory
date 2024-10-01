@@ -1,8 +1,7 @@
-# React + Vite
+# Inventory Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is an inventory management system designed to manage products, categories, suppliers, and other functionalities related to inventory administration.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The **Inventory Management System** allows users to manage products and track stock levels efficiently. It offers a user-friendly interface to handle inventory operations, such as adding new products, editing existing items, categorizing products, and monitoring stock levels in real-time.
