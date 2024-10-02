@@ -18,6 +18,7 @@ export default function ProductView() {
     useState("Select category");
   const [price, setPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getProducts();
@@ -34,7 +35,8 @@ export default function ProductView() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch categories");
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to fectch products`);
       }
 
       const data = await response.json();
@@ -45,7 +47,7 @@ export default function ProductView() {
 
       setProducts(data);
     } catch (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -60,7 +62,8 @@ export default function ProductView() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch categories");
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to fetch categories`);
       }
 
       const data = await response.json();
@@ -70,7 +73,7 @@ export default function ProductView() {
       }
       setCategories(data); // Actualiza el estado con los datos obtenidos
     } catch (error) {
-      alert(error.message); // Maneja el error
+      setErrorMessage(error.message);
     }
   }
 
@@ -101,14 +104,25 @@ export default function ProductView() {
       });
 
       if (!response.ok) {
-        const errorResponse = await response.text();
-        throw new Error(
-          `POST PRODUCT ERROR: ${errorResponse} ${response.statusText}`
-        );
+        console.log("test");
+        console.log(response);
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to create products`);
       }
-      window.location.reload();
+      // Refresca solo la lista de productos después de crear uno nuevo
+      getProducts();
+
+      // Resetea los campos de entrada después de crear el producto
+      setName("");
+      setDescription("");
+      setStock(0);
+      setSelectCategory(0);
+      setSelectCategoryName("Select category");
+      setPrice(0);
+      setDiscount(0);
+      setErrorMessage(""); // Resetea el mensaje de error
     } catch (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -118,30 +132,29 @@ export default function ProductView() {
         <Col xs={5} md={10}>
           <br />
           <h3>Create product</h3>
-
           <br />
-
+          {errorMessage && (
+            <div className="alert alert-danger">{errorMessage}</div>
+          )}{" "}
+          {/* Mostrar mensaje de error */}
           <Form.Label>Product Name</Form.Label>
           <Form.Control
             type="text"
             id="name"
             onChange={(e) => setName(e.target.value)}
           />
-
           <Form.Label>Product Description</Form.Label>
           <Form.Control
             type="text"
             id="description"
             onChange={(e) => setDescription(e.target.value)}
           />
-
           <Form.Label>Product Stock</Form.Label>
           <Form.Control
             type="number"
             id="stock"
             onChange={(e) => setStock(e.target.value)}
           />
-
           <Form.Label>Product Discount %:</Form.Label>
           <Form.Control
             type="number"
@@ -149,7 +162,6 @@ export default function ProductView() {
             onChange={(e) => setDiscount(e.target.value)}
           />
           <br />
-
           <Dropdown>
             <Dropdown.Toggle variant="success">
               {selectCategoryName}
@@ -168,19 +180,15 @@ export default function ProductView() {
               ))}
             </Dropdown.Menu>
           </Dropdown>
-
           <br />
-
           <Form.Label>Product Price:</Form.Label>
           <Form.Control
             type="number"
             id="price"
             onChange={(e) => setPrice(e.target.value)}
           />
-
           <br />
           <br />
-
           <Button onClick={() => createProduct()}>Create</Button>
         </Col>
       </Row>

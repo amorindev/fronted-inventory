@@ -10,6 +10,7 @@ export default function KardexView() {
     kardex_products: [{ prod_id: "", pro_kar_amount: "" }],
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     getKardex();
     getProducts();
@@ -25,13 +26,14 @@ export default function KardexView() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch products");
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to fectch products`);
       }
 
       const data = await response.json();
       setProducts(data);
     } catch (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -45,13 +47,14 @@ export default function KardexView() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch kardex");
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to fectch kardex`);
       }
 
       const data = await response.json();
       setKardexData(data);
     } catch (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -66,7 +69,7 @@ export default function KardexView() {
           pro_kar_amount: parseInt(product.pro_kar_amount, 10), // Convertir a número
         })),
       };
-      console.log(JSON.stringify(newKardex, null, 2));
+      console.log(JSON.stringify(formattedKardex, null, 2));
 
       const response = await fetch(apiURL + "/kardex", {
         method: "POST",
@@ -77,7 +80,8 @@ export default function KardexView() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create kardex");
+        const errorData = await response.json(); // O response.json() si el backend devuelve JSON
+        throw new Error(errorData.message || `Failed to create kardex`);
       }
 
       // Refresh the list after creating a new kardex
@@ -87,8 +91,9 @@ export default function KardexView() {
         kardex_type: "",
         kardex_products: [{ prod_id: "", pro_kar_amount: "" }],
       });
+      setErrorMessage(""); // Resetea el mensaje de error
     } catch (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -131,6 +136,10 @@ export default function KardexView() {
       <br />
       <h3>Create kardex</h3>
       <br />
+      {errorMessage && (
+        <div className="alert alert-danger">{errorMessage}</div>
+      )}{" "}
+      {/* Mostrar el mensaje de error */}
       <input
         type="text"
         className="form-control mb-3"
@@ -190,7 +199,6 @@ export default function KardexView() {
       </button>
       <br />
       <br />
-
       {kardexData.length > 0 ? (
         <table className="table table-bordered">
           <thead className="thead-light">
