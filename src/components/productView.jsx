@@ -78,7 +78,6 @@ export default function ProductView() {
   }
 
   async function createProduct() {
-    console.log("test");
     console.log({
       prod_name: name.toUpperCase(),
       prod_desc: description,
@@ -211,6 +210,7 @@ export default function ProductView() {
               productCatId={product.cat_id}
               //productCatName={product.cat_name}
               categories={categories}
+              getProducts={getProducts}
             />
           </Col>
         ))}

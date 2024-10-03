@@ -12,6 +12,7 @@ export default function ProductCard({
   productCatId,
   //productCatName,
   categories,
+  getProducts,
 }) {
   const apiURL = import.meta.env.VITE_API;
   const [editing, setEditing] = useState(false);
@@ -48,8 +49,11 @@ export default function ProductCard({
       }
 
       //const data = await response.json();
+      console.log("llegoooooooooooooooooo1");
 
-      window.location.reload();
+      setEditing(false);
+      getProducts();
+      console.log("llegoooooooooooooooooo2");
     } catch (error) {
       alert(error.message);
     }
@@ -67,7 +71,7 @@ export default function ProductCard({
       if (!response.ok) {
         throw new Error("Error delete category");
       }
-      window.location.reload();
+      getProducts();
     } catch (error) {
       alert(error.message);
     }
@@ -88,7 +92,12 @@ export default function ProductCard({
             <Button variant="danger" onClick={() => deleteProduct()}>
               Delete Product
             </Button>
-            <Button variant="secondary" onClick={() => setEditing(true)}>
+
+            <Button
+              className="px-3"
+              variant="secondary"
+              onClick={() => setEditing(true)}
+            >
               Edit Product
             </Button>
           </>
@@ -191,4 +200,5 @@ ProductCard.propTypes = {
       cat_name: PropTypes.string,
     })
   ),
+  getProducts: PropTypes.func.isRequired,
 };
