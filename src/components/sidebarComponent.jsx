@@ -1,6 +1,13 @@
-import { BoxSeam, Building, People, UiChecks } from "react-bootstrap-icons";
+import {
+  Boxes,
+  BoxSeam,
+  Building,
+  People,
+  UiChecks,
+} from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import "./../style.css";
+import SidebarItem from "./sidebarItem";
 
 export default function SidebarComponent({ setActivePage, activePage }) {
   return (
@@ -11,45 +18,40 @@ export default function SidebarComponent({ setActivePage, activePage }) {
       </div>
       <hr className="text-dark" />
       <div className="list-group list-group-flush">
-        <a
-          className={`list-group-item py-2 my-1 ${activePage === "Organizacion" ? "active" : ""}`}
+        <SidebarItem
+          label="Organización"
+          icon={Building}
+          isActive={activePage === "Organizacion"}
           onClick={() => setActivePage("Organizacion")}
-        >
-          <Building className="me-2" />
-          <span>Organizacion</span>
-        </a>
+        />
 
-        <a
-          className={`list-group-item py-2 my-1 ${activePage === "Productos" ? "active" : ""}`}
+        <SidebarItem
+          label="Categorias"
+          icon={Boxes}
+          isActive={activePage === "Categorias"}
+          onClick={() => setActivePage("Categorias")}
+        />
+
+        <SidebarItem
+          label="Productos"
+          icon={BoxSeam}
+          isActive={activePage === "Productos"}
           onClick={() => setActivePage("Productos")}
-        >
-          <BoxSeam className="me-2" />
-          <span>Productos</span>
-        </a>
+        />
 
-        <a
-          className={`list-group-item py-2 my-1 ${activePage === "Kardex" ? "active" : ""}`}
+        <SidebarItem
+          label="Kardex"
+          icon={UiChecks}
+          isActive={activePage === "Kardex"}
           onClick={() => setActivePage("Kardex")}
-        >
-          <UiChecks className="me-2" />
-          <span>Kardex</span>
-        </a>
+        />
 
-        <a
-          className={`list-group-item py-2 my-1 ${activePage === "Clientes" ? "active" : ""}`}
-          onClick={() => setActivePage("Clientes")}
-        >
-          <People className="me-2" />
-          <span>Clientes</span>
-        </a>
-
-        <a
-          className={`list-group-item py-2 my-1 ${activePage === "Proveedores" ? "active" : ""}`}
+        <SidebarItem
+          label="Proveedores"
+          icon={People}
+          isActive={activePage === "Proveedores"}
           onClick={() => setActivePage("Proveedores")}
-        >
-          <People className="me-2" />
-          <span>Proveedores</span>
-        </a>
+        />
       </div>
     </div>
   );

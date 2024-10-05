@@ -2,7 +2,9 @@
 export default function ProviderView() {
     return (
       <div>
-        <h1>Provider View</h1>
+        <br/>
+        <h3>Provider</h3>
+        <br/>
       </div>
     )
   }

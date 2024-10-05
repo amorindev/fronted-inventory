@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 import SidebarComponent from "./sidebarComponent";
-import KardexView from "./kardexView";
-import ClientView from "./clientView";
-import ProviderView from "./providerView";
-import OrganizationView from "./organizationView";
-import ProductView from "./productView";
+
+import KardexView from "./../services/kardex/kardexView";
+import CategoryView from "./../services/category/categoryView";
+import ProviderView from "./../services/provider/providerView";
+import OrganizationView from "./../services/organization/organizationView";
+import ProductView from "./../services/product/productView";
 
 export default function DashboardPage() {
   const [activePage, setActivePage] = useState("Organizacion"); // Página inicial
@@ -16,14 +17,14 @@ export default function DashboardPage() {
         return <ProductView />;
       case "Kardex":
         return <KardexView />;
-      case "Clientes":
-        return <ClientView />;
+      case "Categorias":
+        return <CategoryView />;
       case "Proveedores":
         return <ProviderView />;
       case "Organizacion":
         return <OrganizationView />;
       default:
-        return <ProviderView />;
+        return <OrganizationView />;
     }
   };
 
