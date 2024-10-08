@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function CategoryView() {
-  const apiURL = "http://localhost:7000/api/v1/categories"; // URL de la API
+  const apiURL = import.meta.env.VITE_API; // URL de la API
   const [newCategory, setNewCategory] = useState({ cat_name: "" });
   const [categories, setCategories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -13,7 +13,7 @@ export default function CategoryView() {
 
   async function fetchCategories() {
     try {
-      const response = await fetch(apiURL, {
+      const response = await fetch(apiURL + "/categories", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

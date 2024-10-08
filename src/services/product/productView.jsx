@@ -53,7 +53,6 @@ export default function ProductView() {
 
   async function getCategories() {
     try {
-      //http://localhost:7000/v1/categories
       const response = await fetch(apiURL + "/categories", {
         method: "GET",
         headers: {

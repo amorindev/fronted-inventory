@@ -55,7 +55,7 @@ export default function LoginPage() {
             />
           </div>
           <div className="mb-2">
-            <label htmlFor="password">Email</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               placeholder="Enter password"
