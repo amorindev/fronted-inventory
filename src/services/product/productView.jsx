@@ -207,8 +207,8 @@ export default function ProductView() {
               productStk={product.prod_stk}
               productPrice={product.prod_price}
               productDiscount={product.prod_discount}
-              productCatId={product.cat_id}
-              //productCatName={product.cat_name}
+              productCatId={product.category.cat_id}
+              productCatName={product.category.cat_name}
               categories={categories}
               getProducts={getProducts}
             />

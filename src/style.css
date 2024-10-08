@@ -1,11 +1,10 @@
 .list-group a:hover {
-    color: white;
-    background-color: black;
-  }
-  .list-group-item.active {
-    background-color: #000 !important; /* Color de fondo negro */
-    color: white !important; /* Texto blanco */
-    font-weight: bold; /* Texto en negrita */
-    border-color: #000 !important; /* Bordes negros */
-  }
-  
+  color: white;
+  background-color: black;
+}
+.list-group-item.active {
+  background-color: #000 !important; /* Color de fondo negro */
+  color: white !important; /* Texto blanco */
+  font-weight: bold; /* Texto en negrita */
+  border-color: #000 !important; /* Bordes negros */
+}

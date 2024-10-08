@@ -10,7 +10,7 @@ export default function ProductCard({
   productPrice,
   productDiscount,
   productCatId,
-  //productCatName,
+  productCatName,
   categories,
   getProducts,
 }) {
@@ -22,8 +22,7 @@ export default function ProductCard({
   const [stock, setStock] = useState(productStk);
   const [selectCategory, setSelectCategory] = useState(productCatId);
   //const [selectCategoryName, setSelectCategoryName] = useState(productCatName);
-  const [selectCategoryName, setSelectCategoryName] =
-    useState("Select category");
+  const [selectCategoryName, setSelectCategoryName] = useState(productCatName);
   const [price, setPrice] = useState(productPrice);
   const [discount, setDiscount] = useState(productDiscount);
 
@@ -49,11 +48,8 @@ export default function ProductCard({
       }
 
       //const data = await response.json();
-      console.log("llegoooooooooooooooooo1");
-
       setEditing(false);
       getProducts();
-      console.log("llegoooooooooooooooooo2");
     } catch (error) {
       alert(error.message);
     }
@@ -86,7 +82,7 @@ export default function ProductCard({
             <Card.Text>Description: {productDesc}</Card.Text>
             <Card.Text>Stock: {productStk}</Card.Text>
             <Card.Text>Discount: {productDiscount}</Card.Text>
-            {/* <Card.Text>Category: {productCatName}</Card.Text> */}
+            <Card.Text>Category: {productCatName}</Card.Text>
             <Card.Text>Price: {productPrice}</Card.Text>
 
             <Button variant="danger" onClick={() => deleteProduct()}>
