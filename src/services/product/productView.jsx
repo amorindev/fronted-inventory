@@ -40,9 +40,9 @@ export default function ProductView() {
       }
 
       const data = await response.json();
-      console.log(data);
       if (data == null) {
         alert("Lista de productos nulo");
+        
       }
 
       setProducts(data);
@@ -66,7 +66,6 @@ export default function ProductView() {
       }
 
       const data = await response.json();
-      console.log(data);
       if (data == null) {
         alert("es nulo");
       }
@@ -77,14 +76,6 @@ export default function ProductView() {
   }
 
   async function createProduct() {
-    console.log({
-      prod_name: name.toUpperCase(),
-      prod_desc: description,
-      prod_discount: parseInt(discount),
-      prod_price: parseFloat(price),
-      prod_stk: parseInt(stock),
-      cat_id: selectCategory,
-    });
     try {
       const response = await fetch(apiURL + `/products`, {
         method: "POST",
@@ -102,8 +93,6 @@ export default function ProductView() {
       });
 
       if (!response.ok) {
-        console.log("test");
-        console.log(response);
         const errorData = await response.json(); // O response.json() si el backend devuelve JSON
         throw new Error(errorData.message || `Failed to create products`);
       }

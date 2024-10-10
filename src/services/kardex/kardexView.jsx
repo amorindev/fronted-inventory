@@ -69,7 +69,7 @@ export default function KardexView() {
           pro_kar_amount: parseInt(product.pro_kar_amount, 10), // Convertir a número
         })),
       };
-      console.log(JSON.stringify(formattedKardex, null, 2));
+     
 
       const response = await fetch(apiURL + "/kardex", {
         method: "POST",

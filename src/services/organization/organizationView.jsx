@@ -25,7 +25,7 @@ export default function OrganizationView() {
       }
 
       const data = await response.json();
-      console.log(data);
+
       setCompany(data);
     } catch (error) {
       setErrorMessage(error.message);

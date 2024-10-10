@@ -9,7 +9,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   async function login() {
-    console.log(email, password);
     try {
       const response = await fetch(apiURL + `/authentication`, {
         method: "POST",
