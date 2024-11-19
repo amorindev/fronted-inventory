@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "serve dist -n -l -p $PORT"
+    "start": "serve dist -n -L -p $PORT"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
