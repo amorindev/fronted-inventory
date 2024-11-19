@@ -39,7 +39,7 @@ export default function ProviderView() {
 
   async function createProvider() {
     try {
-      const response = await fetch(apiURL, {
+      const response = await fetch(apiURL + "/providers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,8 +48,9 @@ export default function ProviderView() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create provider");
+        /* const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create provider"); */
+        throw new Error("Datos del usuario inválidos");
       }
 
       setNewProvider({
@@ -77,38 +78,56 @@ export default function ProviderView() {
   return (
     <div className="container">
       <br />
-      <h3>Listado de Proveedores</h3>
+      <main>
+        <h3>Listado de Proveedores</h3>
+      </main>
       <br />
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
       {/* Formulario para crear proveedor */}
       <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Nombre:
+        </label>
         <input
           type="text"
+          id="name"
           name="prov_name"
           className="form-control"
           placeholder="Nombre del proveedor"
           value={newProvider.prov_name}
           onChange={handleInputChange}
         />
+        <label htmlFor="address" className="form-label">
+          Dirección:
+        </label>
         <input
           type="text"
+          id="address"
           name="prov_address"
           className="form-control mt-2"
           placeholder="Dirección del proveedor"
           value={newProvider.prov_address}
           onChange={handleInputChange}
         />
+        <label htmlFor="email" className="form-label">
+          Email:
+        </label>
         <input
           type="email"
+          id="email"
           name="prov_email"
           className="form-control mt-2"
           placeholder="Email del proveedor"
           value={newProvider.prov_email}
           onChange={handleInputChange}
         />
+        <label htmlFor="phone" className="form-label">
+          Teléfono:
+        </label>
         <input
           type="text"
+          id="phone"
           name="prov_phone"
           className="form-control mt-2"
           placeholder="Teléfono del proveedor"
@@ -121,7 +140,7 @@ export default function ProviderView() {
       </div>
 
       {/* Tabla de proveedores */}
-      {providers.length > 0 ? (
+      {providers && providers.length > 0 ? (
         <table className="table table-bordered">
           <thead className="thead-light">
             <tr>

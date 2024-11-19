@@ -69,7 +69,6 @@ export default function KardexView() {
           pro_kar_amount: parseInt(product.pro_kar_amount, 10), // Convertir a número
         })),
       };
-     
 
       const response = await fetch(apiURL + "/kardex", {
         method: "POST",
@@ -134,72 +133,103 @@ export default function KardexView() {
   return (
     <div className="container">
       <br />
-      <h3>Create kardex</h3>
+      <main>
+        <h3>Create Kardex</h3>
+      </main>
       <br />
-      {errorMessage && (
-        <div className="alert alert-danger">{errorMessage}</div>
-      )}{" "}
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       {/* Mostrar el mensaje de error */}
-      <input
-        type="text"
-        className="form-control mb-3"
-        name="kardex_description"
-        placeholder="Descripción"
-        value={newKardex.kardex_description}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        className="form-control mb-3"
-        name="kardex_type"
-        placeholder="Tipo (ENTRADA/SALIDA)"
-        value={newKardex.kardex_type}
-        onChange={handleChange}
-      />
-      {newKardex.kardex_products.map((product, index) => (
-        <div key={index} className="mb-3">
-          <div className="input-group mb-3">
-            <select
-              className="form-select"
-              name="prod_id"
-              value={product.prod_id}
-              onChange={(e) => handleProductChange(index, e)}
-            >
-              <option value="">Seleccione un producto</option>
-              {products.map((prod) => (
-                <option key={prod.prod_id} value={prod.prod_id}>
-                  {prod.prod_name}
-                </option>
-              ))}
-            </select>
 
-            <input
-              type="number"
-              className="form-control"
-              name="pro_kar_amount"
-              placeholder="Cantidad"
-              value={product.pro_kar_amount}
-              onChange={(e) => handleProductChange(index, e)}
-            />
+      {products && products.length > 0 ? (
+        <>
+          <label htmlFor="description" className="form-label">
+            Description:
+          </label>
+          <input
+            type="text"
+            id="description"
+            className="form-control mb-3"
+            name="kardex_description"
+            placeholder="Descripción"
+            value={newKardex.kardex_description}
+            onChange={handleChange}
+          />
+          <label htmlFor="type" className="form-label">
+            type:
+          </label>
+          <input
+            type="text"
+            id="type"
+            className="form-control mb-3"
+            name="kardex_type"
+            placeholder="Tipo (ENTRADA/SALIDA)"
+            value={newKardex.kardex_type}
+            onChange={handleChange}
+          />
+          {newKardex.kardex_products.map((product, index) => (
+            <div key={index} className="mb-3">
+              <div className="input-group mb-3">
+                <div className="form-group me-3">
+                  <label htmlFor={`prod_id_${index}`} className="form-label">
+                    Select the product:
+                  </label>
+                  <select
+                    className="form-select"
+                    id={`prod_id_${index}`}
+                    name="prod_id"
+                    value={product.prod_id}
+                    onChange={(e) => handleProductChange(index, e)}
+                  >
+                    <option value="">Seleccione un producto</option>
+                    {products.map((prod) => (
+                      <option key={prod.prod_id} value={prod.prod_id}>
+                        {prod.prod_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <button
-              className="btn btn-danger"
-              onClick={() => removeProduct(index)}
-            >
-              Eliminar
-            </button>
-          </div>
+                <div className="form-group me-3">
+                  <label htmlFor={`amount_${index}`} className="form-label">
+                    Amount:
+                  </label>
+                  <input
+                    type="number"
+                    id={`amount_${index}`}
+                    className="form-control"
+                    name="pro_kar_amount"
+                    placeholder="Cantidad"
+                    value={product.pro_kar_amount}
+                    onChange={(e) => handleProductChange(index, e)}
+                  />
+                </div>
+
+                <button
+                  className="btn btn-danger align-self-end"
+                  onClick={() => removeProduct(index)}
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <button className="btn btn-primary" onClick={addProduct}>
+            Agregar Producto
+          </button>
+          <button className="btn btn-success mx-2" onClick={createKardex}>
+            Crear Kardex
+          </button>
+        </>
+      ) : (
+        <div className="alert alert-warning">
+          No hay productos disponibles para crear Kardex.
         </div>
-      ))}
-      <button className="btn btn-primary" onClick={addProduct}>
-        Agregar Producto
-      </button>
-      <button className="btn btn-success mx-2" onClick={createKardex}>
-        Crear Kardex
-      </button>
+      )}
+
       <br />
       <br />
-      {kardexData.length > 0 ? (
+      {kardexData && kardexData.length > 0 ? (
         <table className="table table-bordered">
           <thead className="thead-light">
             <tr>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function CategoryView() {
   const apiURL = import.meta.env.VITE_API; // URL de la API
   const [newCategory, setNewCategory] = useState({ cat_name: "" });
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -34,7 +34,7 @@ export default function CategoryView() {
 
   async function createCategory() {
     try {
-      const response = await fetch(apiURL, {
+      const response = await fetch(apiURL + "/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,9 @@ export default function CategoryView() {
   return (
     <div className="container">
       <br />
-      <h3>Listado de Categorías</h3>
+      <main>
+        <h3>Listado de Categorías</h3>
+      </main>
       <br />
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       {successMessage && (
@@ -71,8 +73,12 @@ export default function CategoryView() {
 
       {/* Formulario para crear categoría */}
       <div className="mb-3">
+        <label htmlFor="categoryNameInput" className="form-label">
+          Nombre de la categoría
+        </label>
         <input
           type="text"
+          id="categoryNameInput"
           className="form-control"
           placeholder="Nombre de la categoría"
           value={newCategory.cat_name}
@@ -84,7 +90,7 @@ export default function CategoryView() {
       </div>
 
       {/* Tabla de categorías */}
-      {categories.length > 0 ? (
+      {categories ? (
         <table className="table table-bordered">
           <thead className="thead-light">
             <tr>

@@ -38,7 +38,9 @@ export default function LoginPage() {
     <div className="d-flex align-items-center justify-content-center vh-100 ">
       <div className="p-3 rounded bg-white w-25 border">
         <form>
-          <h3>Iniciar Sesión</h3>
+          <header>
+            <h3>Iniciar Sesión</h3>
+          </header>
           {errorMessage && (
             <div className="alert alert-danger" role="alert">
               {errorMessage}
@@ -48,6 +50,7 @@ export default function LoginPage() {
             <label htmlFor="email">Email</label>
             <input
               type="email"
+              id="email"
               placeholder="Enter email"
               className="form-control"
               onChange={(e) => setEmail(e.target.value)}
@@ -57,6 +60,7 @@ export default function LoginPage() {
             <label htmlFor="password">Password</label>
             <input
               type="password"
+              id="password"
               placeholder="Enter password"
               className="form-control"
               onChange={(e) => setPassword(e.target.value)}

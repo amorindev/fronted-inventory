@@ -12,7 +12,7 @@ export default function OrganizationView() {
 
   async function getCompany(companyId) {
     try {
-      const response = await fetch(`${apiURL}/companies/${companyId}`, {
+      const response = await fetch(apiURL + "/companies/" + companyId, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +34,10 @@ export default function OrganizationView() {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Organización</h3> {/* Título en la parte superior */}
+      <main>
+        <h3 className="mb-4">Organización</h3>{" "}
+        {/* Título en la parte superior */}
+      </main>
       <div className="d-flex justify-content-center">
         <div className="row">
           <div className="col-md-40">
@@ -48,7 +51,7 @@ export default function OrganizationView() {
                 <div className="card-body text-center">
                   {" "}
                   {/* Centrado solo en el contenido de la tarjeta */}
-                  <h4 className="card-title">{company.com_name}</h4>
+                  <h2 className="card-title">{company.com_name}</h2>
                   <div className="d-flex justify-content-center my-4">
                     {" "}
                     {/* Contenedor para centrar la imagen */}

@@ -41,8 +41,7 @@ export default function ProductView() {
 
       const data = await response.json();
       if (data == null) {
-        alert("Lista de productos nulo");
-        
+        setErrorMessage("Lista de productos nulo");
       }
 
       setProducts(data);
@@ -67,7 +66,7 @@ export default function ProductView() {
 
       const data = await response.json();
       if (data == null) {
-        alert("es nulo");
+        setErrorMessage("Lista de categorias es nula");
       }
       setCategories(data); // Actualiza el estado con los datos obtenidos
     } catch (error) {
@@ -115,94 +114,102 @@ export default function ProductView() {
 
   return (
     <Container>
-      <Row>
-        <Col xs={5} md={10}>
-          <br />
-          <h3>Create product</h3>
-          <br />
-          {errorMessage && (
-            <div className="alert alert-danger">{errorMessage}</div>
-          )}{" "}
-          {/* Mostrar mensaje de error */}
-          <Form.Label>Product Name</Form.Label>
-          <Form.Control
-            type="text"
-            id="name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Form.Label>Product Description</Form.Label>
-          <Form.Control
-            type="text"
-            id="description"
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <Form.Label>Product Stock</Form.Label>
-          <Form.Control
-            type="number"
-            id="stock"
-            onChange={(e) => setStock(e.target.value)}
-          />
-          <Form.Label>Product Discount %:</Form.Label>
-          <Form.Control
-            type="number"
-            id="discount"
-            onChange={(e) => setDiscount(e.target.value)}
-          />
-          <br />
-          <Dropdown>
-            <Dropdown.Toggle variant="success">
-              {selectCategoryName}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {categories.map((category) => (
-                <Dropdown.Item
-                  key={category.cat_id}
-                  onClick={() => {
-                    setSelectCategory(category.cat_id);
-                    setSelectCategoryName(category.cat_name);
-                  }}
-                >
-                  {category.cat_name}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <br />
-          <Form.Label>Product Price:</Form.Label>
-          <Form.Control
-            type="number"
-            id="price"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <br />
-          <br />
-          <Button onClick={() => createProduct()}>Create</Button>
-        </Col>
-      </Row>
+      <br />
+      <main>
+        <h3>Create product</h3>
+      </main>
+      <br />
+      {products && categories ? (
+        <>
+          <Row>
+            <Col xs={5} md={10}>
+              {errorMessage && (
+                <div className="alert alert-danger">{errorMessage}</div>
+              )}
+              {/* Mostrar mensaje de error */}
+              <Form.Label htmlFor="name">Product Name</Form.Label>
+              <Form.Control
+                type="text"
+                id="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Form.Label htmlFor="description">Product Description</Form.Label>
+              <Form.Control
+                type="text"
+                id="description"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <Form.Label htmlFor="stock">Product Stock</Form.Label>
+              <Form.Control
+                type="number"
+                id="stock"
+                onChange={(e) => setStock(e.target.value)}
+              />
+              <Form.Label htmlFor="discount">Product Discount %:</Form.Label>
+              <Form.Control
+                type="number"
+                id="discount"
+                onChange={(e) => setDiscount(e.target.value)}
+              />
+              <br />
+              <Dropdown>
+                <Dropdown.Toggle variant="success">
+                  {selectCategoryName}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {categories.map((category) => (
+                    <Dropdown.Item
+                      key={category.cat_id}
+                      onClick={() => {
+                        setSelectCategory(category.cat_id);
+                        setSelectCategoryName(category.cat_name);
+                      }}
+                    >
+                      {category.cat_name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+              <br />
+              <Form.Label htmlFor="price">Product Price:</Form.Label>
+              <Form.Control
+                type="number"
+                id="price"
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              <br />
+              <br />
+              <Button onClick={() => createProduct()}>Create</Button>
+            </Col>
+          </Row>
 
-      <br />
-      <br />
+          <br />
+          <br />
 
-      <h3>Current Products</h3>
-      <br />
-      <Row sm={1} md={2} lg={3} className="g-1">
-        {products.map((product) => (
-          <Col key={product.prod_id}>
-            <ProductCard
-              productId={product.prod_id}
-              productName={product.prod_name}
-              productDesc={product.prod_desc}
-              productStk={product.prod_stk}
-              productPrice={product.prod_price}
-              productDiscount={product.prod_discount}
-              productCatId={product.category.cat_id}
-              productCatName={product.category.cat_name}
-              categories={categories}
-              getProducts={getProducts}
-            />
-          </Col>
-        ))}
-      </Row>
+          <h2>Current Products</h2>
+          <br />
+          <Row sm={1} md={2} lg={3} className="g-1">
+            {products.map((product) => (
+              <Col key={product.prod_id}>
+                <ProductCard
+                  productId={product.prod_id}
+                  productName={product.prod_name}
+                  productDesc={product.prod_desc}
+                  productStk={product.prod_stk}
+                  productPrice={product.prod_price}
+                  productDiscount={product.prod_discount}
+                  productCatId={product.category.cat_id}
+                  productCatName={product.category.cat_name}
+                  categories={categories}
+                  getProducts={getProducts}
+                />
+              </Col>
+            ))}
+          </Row>
+        </>
+      ) : (
+        <div className="alert alert-warning">No hay productos disponibles.</div>
+      )}
     </Container>
   );
 }
